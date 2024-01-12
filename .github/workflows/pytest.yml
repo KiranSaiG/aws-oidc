@@ -1,6 +1,8 @@
 # .github/workflows/app.yaml
 name: AWS Test Suite With Pytest
-on: push
+on:
+  push:
+    branches: [ main ]
 
 env:
   AWS_REGION : "us-east-1"   
