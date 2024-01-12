@@ -1,0 +1,39 @@
+# .github/workflows/app.yaml
+name: AWS Test Suite With Pytest
+on: push
+
+env:
+  AWS_REGION : "us-east-1"   
+permissions:
+      id-token: write 
+      contents: read  
+
+jobs:
+  AWSDeploymentTesting:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::791797855262:role/github-oidc-role
+          role-session-name: samplerolesession
+          aws-region: 'us-east-1'
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+
+      - name: Install required python modules
+        run: |
+          python -m pip install --upgrade boto3 moto pytest
+
+      - name: Run AWS test suite
+        working-directory: ./AWSTestExecutions
+        run: |
+          pytest -v
