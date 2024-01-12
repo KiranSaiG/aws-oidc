@@ -2,13 +2,13 @@
 name: AWS Test Suite With Pytest
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 env:
-  AWS_REGION : "us-east-1"   
+  AWS_REGION: "us-east-1"
 permissions:
-      id-token: write 
-      contents: read  
+  id-token: write
+  contents: read
 
 jobs:
   AWSDeploymentTesting:
@@ -23,8 +23,8 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::791797855262:role/github-oidc-role
-          role-session-name: samplerolesession
-          aws-region: 'us-east-1'
+          role-session-name: github-oidc-role
+          aws-region: "us-east-1"
 
       - name: Setup Python
         uses: actions/setup-python@v2
